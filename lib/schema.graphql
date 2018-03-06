@@ -1,0 +1,21 @@
+type Category {
+  name: String
+  slug: String,
+  products: [Product]
+}
+
+type Datacenter {
+  name: String
+  url: String
+}
+
+type Product {
+  name: String
+  description: String
+  url: String
+}
+
+type Query {
+  datacenters: [Datacenter]
+  categories: [Category]
+}

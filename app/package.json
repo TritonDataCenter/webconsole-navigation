@@ -20,14 +20,15 @@
   },
   "homepage": "https://github.com/geek/webconsole-console#readme",
   "dependencies": {
+    "brule": "3.x.x",
     "consul": "0.30.x",
-    "graphi": "^5.3.2",
-    "hoek": "^5.0.3"
+    "graphi": "5.3.x",
+    "hapi": "17.x.x",
+    "hoek": "5.0.x"
   },
   "devDependencies": {
     "belly-button": "4.x.x",
     "code": "5.x.x",
-    "hapi": "^17.2.1",
     "lab": "15.x.x"
   }
 }

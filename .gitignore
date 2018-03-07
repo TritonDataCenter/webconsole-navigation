@@ -60,3 +60,5 @@ typings/
 yarn.lock
 yarn-error.log
 .eslintcache
+_env
+_env_consul

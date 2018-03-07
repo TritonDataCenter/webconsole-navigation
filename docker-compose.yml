@@ -1,0 +1,30 @@
+version: '2.1'
+
+services:
+  consul:
+    image: autopilotpattern/consul:1.0.0r43
+    command: >
+      /usr/local/bin/containerpilot
+    env_file:
+      - _env_consul
+    restart: always
+    mem_limit: 512m
+    network_mode: bridge
+    labels:
+      - triton.cns.services=webconsole-console-consul
+    expose:
+      - 9090
+      - 8500
+
+  webconsole-instances:
+    image: joyent/webconsole-console:1.0.0
+    restart: always
+    mem_limit: 1g
+    network_mode: bridge
+    labels:
+      - triton.cns.services=webconsole-console
+    env_file:
+      - _env
+      - _env_consul
+    ports:
+      - 8080:8080

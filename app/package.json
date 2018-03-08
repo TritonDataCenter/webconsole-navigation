@@ -23,7 +23,7 @@
   "dependencies": {
     "brule": "3.x.x",
     "consul": "0.30.x",
-    "graphi": "5.3.x",
+    "graphi": "5.4.x",
     "hapi": "17.x.x",
     "hoek": "5.0.x"
   },

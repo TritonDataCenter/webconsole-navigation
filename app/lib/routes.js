@@ -10,7 +10,7 @@ module.exports = [
         method: async (...[consul,, request]) => {
           let datacenters = [];
           try {
-            const result = await consul.kv.get({ key: 'datacenters '});
+            const result = await consul.kv.get('datacenters');
             datacenters = JSON.parse(result.Value);
           } catch (err) {
             request.log(['error', 'consul', 'datacenters'], err);
@@ -30,7 +30,7 @@ module.exports = [
         method: async (...[consul,, request]) => {
           let categories = [];
           try {
-            const result = await consul.kv.get({ key: 'nav '});
+            const result = await consul.kv.get('categories');
             categories = JSON.parse(result.Value);
           } catch (err) {
             request.log(['error', 'consul', 'categories'], err);
@@ -40,7 +40,7 @@ module.exports = [
           return categories.map((category) => {
             return {
               name: category.name,
-              slug: category.slug,
+              slug: category.slug || category.name.toLowerCase(),
               products: category.products.map((product) => {
                 return {
                   name: product.name,

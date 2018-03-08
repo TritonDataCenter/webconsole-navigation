@@ -13,13 +13,21 @@
                   '-retry-interval', '5s'],
       restarts: 'unlimited',
       health: {
-        exec: "curl -so /dev/null http://localhost:8500",
+        exec: "curl -so /dev/null http://127.0.0.1:8500/v1/status/leader",
         interval: 10,
         ttl: 25,
       }
     },
     {
-      name: 'node',
+      name: 'setup-config',
+      exec: 'node setup.js',
+      when: {
+        source: 'consul-agent',
+        once: 'healthy'
+      }
+    },
+    {
+      name: 'webconsole-console',
       port: {{.PORT}},
       exec: 'node server.js',
       health: {
@@ -27,7 +35,11 @@
         interval: 5,
         ttl: 5
       },
-      restarts: 'unlimited'
+      restarts: 'unlimited',
+      when: {
+        source: 'setup-config',
+        once: 'exitSuccess'
+      }
     }
   ],
   watches: [],

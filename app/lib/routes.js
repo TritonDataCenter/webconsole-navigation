@@ -8,7 +8,7 @@ module.exports = [
     handler: {
       graphql: {
         method: async (...[consul,, request]) => {
-          let datacenters;
+          let datacenters = [];
           try {
             const result = await consul.kv.get({ key: 'datacenters '});
             datacenters = JSON.parse(result.Value);
@@ -28,7 +28,7 @@ module.exports = [
     handler: {
       graphql: {
         method: async (...[consul,, request]) => {
-          let categories;
+          let categories = [];
           try {
             const result = await consul.kv.get({ key: 'nav '});
             categories = JSON.parse(result.Value);

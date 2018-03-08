@@ -3,21 +3,31 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0) [![Build Status](https://secure.travis-ci.org/joyent/webconsole-console.svg)](http://travis-ci.org/joyent/webconsole-console)
 
 
-hapi plugin that exposes web console navigation resources through [GraphQL](http://graphql.org).
+hapi plugin and server that exposes web console navigation resources through [GraphQL](http://graphql.org).
 
 ## Table of Contents
 
+* [Setup](#setup)
 * [Install](#install)
-* [Options](#options)
-* [Usage](#usage)
+* [Plugin Options](#plugin-options)
+
+## Setup
+
+Run `./setup.sh` to generate the local `_env` file for use with docker.
+
 
 ## Install
 
-```
-npm install webconsole-console
-```
+The service can be installed and started on Triton using:
 
-## Options
+`triton-compose up -d`
+
+or locally with
+
+`docker-compose -f local-compose.yml up -d`
+
+
+## Plugin Options
 
 - `authStrategy`: name of the hapi auth strategy to use for `/graphql` route
 - `baseUrl`: required base URL of the datacenter where the current console is running
@@ -28,7 +38,7 @@ npm install webconsole-console
   - `ca`: string array of trusted certificates in PEM format
 
 
-## Usage
+### Plugin Usage
 
 ```js
 const server = new Hapi.Server();
@@ -39,6 +49,7 @@ await server.register({ plugin: WebConsole, options: { authStrategy, baseUrl: 'h
 ### Local development
 
 ```
+cd app
 npm run dev
 ```
 

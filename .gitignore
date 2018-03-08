@@ -62,3 +62,5 @@ yarn-error.log
 .eslintcache
 _env
 _env_consul
+test.xml
+test.html

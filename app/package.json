@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "belly-button",
     "pretest": "yarn run lint",
-    "test": "lab -c"
+    "test": "lab -c",
+    "test-ci": "yarn run lint && lab -c -r junit -o test.xml -r html -o test.html -r console -o stdout"
   },
   "repository": {
     "type": "git",

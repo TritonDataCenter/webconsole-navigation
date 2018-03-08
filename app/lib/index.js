@@ -8,7 +8,7 @@ const Hoek = require('hoek');
 const Package = require('../package.json');
 const Routes = require('./routes');
 
-const Schema = Fs.readFileSync(Path.join(__dirname, '/schema.graphql'));
+const Schema = Fs.readFileSync(Path.join(__dirname, '/schema.graphql')).toString();
 const defaults = {
   consul: {
     host: '127.0.0.1',
@@ -23,7 +23,7 @@ const graphqlHandler = function (route, options) {
   Hoek.assert(typeof options.method === 'function', 'method must be a function');
 
   return function (request, h) {
-    return options.method(request.plugins.consul, request.payload, request);
+    return options.method(request.server.plugins.consul, request.payload, request);
   };
 };
 
@@ -36,8 +36,10 @@ const register = async (server, options = {}) => {
   server.decorate('request', 'baseUrl', settings.baseUrl);
   server.route(Routes);
 
+  const schema = Graphi.makeExecutableSchema({ schema: Schema });
+
   const graphiOptions = {
-    schema: Schema,
+    schema,
     authStrategy: settings.authStrategy
   };
 

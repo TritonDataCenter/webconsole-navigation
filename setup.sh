@@ -40,6 +40,10 @@ check() {
     echo NODE_ENV=production >> _env
     echo HEALTH_ENDPOINT=check-it-out >> _env
     echo >> _env
+    echo '# Navigation config' >> _env
+    echo NAV_CATEGORIES='[{ "name": "test", "products": [{ "name": "test", "path": "/test" }] }]' >> _env
+    echo NAV_DATACENTERS='[{ "name": "us-sw-1", "url": "https://us-sw-1.api.joyentcloud.com" }]' >> _env
+    echo >> _env
 }
 
 # ---------------------------------------------------

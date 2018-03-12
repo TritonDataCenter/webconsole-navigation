@@ -11,18 +11,18 @@ services:
     mem_limit: 512m
     network_mode: bridge
     labels:
-      - triton.cns.services=webconsole-console-consul
-    expose:
+      - triton.cns.services=webconsole-consul
+    ports:
       - 9090
       - 8500
 
-  webconsole-instances:
-    image: joyent/webconsole-console:1.0.0
+  webconsole-navigation:
+    image: joyent/webconsole-navigation:1.0.0
     restart: always
     mem_limit: 1g
     network_mode: bridge
     labels:
-      - triton.cns.services=webconsole-console
+      - triton.cns.services=webconsole-navigation
     env_file:
       - _env
       - _env_consul

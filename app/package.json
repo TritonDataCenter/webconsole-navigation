@@ -25,7 +25,8 @@
     "consul": "0.30.x",
     "graphi": "5.4.x",
     "hapi": "17.x.x",
-    "hoek": "5.0.x"
+    "hoek": "5.0.x",
+    "instana-nodejs-sensor": "1.36.x"
   },
   "devDependencies": {
     "belly-button": "4.x.x",

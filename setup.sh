@@ -33,12 +33,12 @@ check() {
     fi
 
     echo '# Consul discovery via Triton CNS' >> _env_consul
-    echo CONSUL=webconsole-console-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.joyent.com >> _env_consul
+    echo CONSUL=webconsole-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.joyent.com >> _env_consul
     echo CONSUL_AGENT=1 >> _env_consul
     echo >> _env_consul
 
     echo '# Site URL' >> _env
-    echo BASE_URL=https://webconsole-console.svc.${TRITON_ACCOUNT}.${TRITON_DC}.triton.zone >> _env
+    echo BASE_URL=https://webconsole-navigation.svc.${TRITON_ACCOUNT}.${TRITON_DC}.triton.zone >> _env
     echo >> _env
     echo PORT=8080 >> _env
     echo NODE_ENV=production >> _env

@@ -1,6 +1,6 @@
-# webconsole-console
+# webconsole-navigation
 
-[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0) [![Build Status](https://secure.travis-ci.org/joyent/webconsole-console.svg)](http://travis-ci.org/joyent/webconsole-console)
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0) [![Build Status](https://secure.travis-ci.org/joyent/webconsole-navigation.svg)](http://travis-ci.org/joyent/webconsole-navigation)
 
 
 hapi plugin and server that exposes web console navigation resources through [GraphQL](http://graphql.org).

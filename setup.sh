@@ -27,6 +27,10 @@ check() {
 
     rm -f _env_consul
     rm -f _env
+    if [ -e .env ];
+    then
+        rm -f .env
+    fi
 
     echo '# Consul discovery via Triton CNS' >> _env_consul
     echo CONSUL=webconsole-console-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.joyent.com >> _env_consul

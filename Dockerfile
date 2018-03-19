@@ -27,9 +27,6 @@ ENV CONTAINERPILOT_PATH=/etc/containerpilot.json5
 ENV CONTAINERPILOT=${CONTAINERPILOT_PATH}
 COPY ./etc/containerpilot.json5 /etc/containerpilot.json5
 
-# install yarn
-RUN npm i -g yarn
-
 # Setup the Node.js app
 COPY app /opt/app
 WORKDIR /opt/app/

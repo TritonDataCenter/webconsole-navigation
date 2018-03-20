@@ -18,8 +18,8 @@ describe('instana tests', () => {
     TestDouble.reset();
   });
 
-  it('does not run instana in develop mode', () => {
-    Instana.register('develop');
+  it('does not run instana in development mode', () => {
+    Instana.register('development');
     TestDouble.verify(instana(), { times: 0 });
   });
 

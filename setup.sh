@@ -41,7 +41,7 @@ check() {
     echo BASE_URL=https://webconsole-navigation.svc.${TRITON_ACCOUNT}.${TRITON_DC}.triton.zone >> _env
     echo >> _env
     echo PORT=8080 >> _env
-    echo NODE_ENV=develop >> _env
+    echo NODE_ENV=development >> _env
     echo HEALTH_ENDPOINT=check-it-out >> _env
     echo >> _env
     echo '# Navigation config' >> _env

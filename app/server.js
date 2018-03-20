@@ -3,12 +3,12 @@
 const Brule = require('brule');
 const Hapi = require('hapi');
 const WebConsole = require('./lib');
-const Instana = require('./lib/instana');
+const Instana = require('./instana');
 
 const {
   PORT = 3069,
   BASE_URL = `http://0.0.0.0:${PORT}`,
-  NODE_ENV = 'develop'
+  NODE_ENV = 'development'
 } = process.env;
 
 const server = Hapi.server({

@@ -64,3 +64,4 @@ _env
 _env_consul
 test.xml
 test.html
+package-lock.json

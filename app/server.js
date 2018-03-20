@@ -1,15 +1,14 @@
 'use strict';
 
-const Instana = require('instana-nodejs-sensor');
-Instana();
-
 const Brule = require('brule');
 const Hapi = require('hapi');
 const WebConsole = require('./lib');
+const Instana = require('./lib/instana');
 
 const {
   PORT = 3069,
-  BASE_URL = `http://0.0.0.0:${PORT}`
+  BASE_URL = `http://0.0.0.0:${PORT}`,
+  NODE_ENV = 'develop'
 } = process.env;
 
 const server = Hapi.server({
@@ -23,6 +22,7 @@ process.on('unhandledRejection', (err) => {
 });
 
 async function main () {
+  Instana.register(NODE_ENV);
   await server.register([
     {
       plugin: Brule,

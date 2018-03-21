@@ -25,29 +25,15 @@ check() {
     TRITON_DC=$(triton profile get | awk -F"/" '/url:/{print $3}' | awk -F'.' '{print $1}')
     TRITON_ACCOUNT=$(triton account get | awk -F": " '/id:/{print $2}')
 
-    rm -f _env_consul
-    rm -f _env
-    if [ -e .env ];
-    then
-        rm -f .env
-    fi
+    echo '# Consul discovery via Triton CNS' > .consul.env
+    echo CONSUL=webconsole-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.joyent.com >> .consul.env
+    echo CONSUL_AGENT=1 >> .consul.env
+    echo >> .consul.env
 
-    echo '# Consul discovery via Triton CNS' >> _env_consul
-    echo CONSUL=webconsole-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.joyent.com >> _env_consul
-    echo CONSUL_AGENT=1 >> _env_consul
-    echo >> _env_consul
-
-    echo '# Site URL' >> _env
-    echo BASE_URL=https://webconsole-navigation.svc.${TRITON_ACCOUNT}.${TRITON_DC}.triton.zone >> _env
-    echo >> _env
-    echo PORT=8080 >> _env
-    echo NODE_ENV=development >> _env
-    echo HEALTH_ENDPOINT=check-it-out >> _env
-    echo >> _env
-    echo '# Navigation config' >> _env
-    echo NAV_CATEGORIES='[{ "name": "test", "products": [{ "name": "test", "path": "/test" }] }]' >> _env
-    echo NAV_DATACENTERS='[{ "name": "us-sw-1", "url": "https://us-sw-1.api.joyentcloud.com" }]' >> _env
-    echo >> _env
+    echo PORT=8080 > .env
+    echo NODE_ENV=production > .env
+    echo HEALTH_ENDPOINT=check-it-out >> .env
+    echo >> .env
 }
 
 # ---------------------------------------------------

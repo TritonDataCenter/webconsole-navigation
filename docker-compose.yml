@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.3'
 
 services:
   consul:
@@ -6,7 +6,7 @@ services:
     command: >
       /usr/local/bin/containerpilot
     env_file:
-      - _env_consul
+      - .consul.env
     restart: always
     mem_limit: 512m
     network_mode: bridge
@@ -16,7 +16,7 @@ services:
       - 9090
       - 8500
 
-  webconsole-navigation:
+  navigation:
     image: joyent/webconsole-navigation:1.0.0
     restart: always
     mem_limit: 1g
@@ -24,7 +24,9 @@ services:
     labels:
       - triton.cns.services=webconsole-navigation
     env_file:
-      - _env
-      - _env_consul
+      - .env
+      - .consul.env
     ports:
       - 8080:8080
+    volumes:
+      - ./data:/opt/app/data:ro

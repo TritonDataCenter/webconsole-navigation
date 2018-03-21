@@ -1,28 +1,33 @@
-consul:
-  image: autopilotpattern/consul:1.0.0r43
-  command: >
-    /usr/local/bin/containerpilot
-  environment:
-   - CONSUL_DEV=1
-   - CONSUL=consul
-   - CONSUL_DATACENTER_NAME=dc1
-  restart: always
-  mem_limit: 512m
-  ports:
-    - 8500:8500
-    - 9090:9090
+version: '2.3'
 
-webconsole-navigation:
-  build: ./
-  restart: always
-  mem_limit: 1g
-  env_file:
-    - _env
-  environment:
+services:
+  consul:
+    image: autopilotpattern/consul:1.0.0r43
+    command: >
+      /usr/local/bin/containerpilot
+    environment:
+    - CONSUL_DEV=1
     - CONSUL=consul
-    - PORT=8080
-    - BASE_URL=http://localhost:8080
-  links:
-    - consul:consul
-  ports:
-    - 8080:8080
+    - CONSUL_DATACENTER_NAME=dc1
+    restart: always
+    mem_limit: 512m
+    ports:
+      - 8500:8500
+      - 9090:9090
+
+  navigation:
+    build: ./
+    restart: always
+    mem_limit: 1g
+    env_file:
+      - .env
+    environment:
+      - CONSUL=consul
+      - PORT=8080
+      - BASE_URL=http://localhost:8080
+    links:
+      - consul:consul
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data:/opt/app/data:ro

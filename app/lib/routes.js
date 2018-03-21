@@ -53,5 +53,29 @@ module.exports = [
         }
       }
     }
+  },
+  {
+    path: '/service',
+    method: 'graphql',
+    handler: {
+      graphql: {
+        method: async (...[consul,, request]) => {
+          const { slug } = request.payload;
+
+          let categories = [];
+          try {
+            const result = await consul.kv.get('categories');
+            categories = JSON.parse(result.Value);
+          } catch (err) {
+            request.log(['error', 'consul', 'categories'], err);
+            return err;
+          }
+
+          return categories
+            .reduce((sum, { products }) => sum.concat(products), [])
+            .find((product) => product.slug === slug);
+        }
+      }
+    }
   }
 ];

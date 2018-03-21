@@ -19,15 +19,7 @@
       }
     },
     {
-      name: 'setup-config',
-      exec: 'node setup.js',
-      when: {
-        source: 'consul-agent',
-        once: 'healthy'
-      }
-    },
-    {
-      name: 'webconsole-console',
+      name: 'webconsole-navigation',
       port: {{.PORT}},
       exec: 'node server.js',
       health: {
@@ -35,46 +27,8 @@
         interval: 5,
         ttl: 5
       },
-      restarts: 'unlimited',
-      when: {
-        source: 'setup-config',
-        once: 'exitSuccess'
-      }
+      restarts: 'unlimited'
     }
   ],
-  watches: [],
-  telemetry: {
-    port: 9090,
-    tags: ['op'],
-    metrics: [
-      {
-        namespace: '{{.NAMESPACE | default "app"}}',
-        subsystem: 'request',
-        name: 'concurrent',
-        help: 'Number of concurrent requests',
-        type: 'gauge'
-      },
-      {
-        namespace: '{{.NAMESPACE | default "app"}}',
-        subsystem: 'process',
-        name: 'up_time',
-        help: 'Process up time',
-        type: 'counter'
-      },
-      {
-        namespace: '{{.NAMESPACE | default "app"}}',
-        subsystem: 'process',
-        name: 'mem_rss',
-        help: 'Process memory RSS usage',
-        type: 'gauge'
-      },
-      {
-        namespace: '{{.NAMESPACE | default "app"}}',
-        subsystem: 'process',
-        name: 'heap_used',
-        help: 'Process heap usage',
-        type: 'gauge'
-      }
-    ]
-  }
+  watches: []
 }

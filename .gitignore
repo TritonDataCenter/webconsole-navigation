@@ -60,8 +60,8 @@ typings/
 yarn.lock
 yarn-error.log
 .eslintcache
-_env
-_env_consul
+.env
+.consul.env
 test.xml
 test.html
 package-lock.json

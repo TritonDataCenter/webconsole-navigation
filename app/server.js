@@ -2,14 +2,19 @@
 
 const Brule = require('brule');
 const Hapi = require('hapi');
-const WebConsole = require('./lib');
+const Navigation = require('hapi-webconsole-nav');
 const Instana = require('./instana');
+const Categories = require('./data/categories');
+const Datacenters = require('./data/datacenters');
+
 
 const {
-  PORT = 3069,
-  BASE_URL = `http://0.0.0.0:${PORT}`,
-  NODE_ENV = 'development'
+  PORT = 8080,
+  NODE_ENV = 'production'
 } = process.env;
+
+Instana.register(NODE_ENV);
+
 
 const server = Hapi.server({
   port: PORT,
@@ -22,7 +27,6 @@ process.on('unhandledRejection', (err) => {
 });
 
 async function main () {
-  Instana.register(NODE_ENV);
   await server.register([
     {
       plugin: Brule,
@@ -31,9 +35,10 @@ async function main () {
       }
     },
     {
-      plugin: WebConsole,
+      plugin: Navigation,
       options: {
-        baseUrl: BASE_URL
+        datacenters: Datacenters,
+        categories: Categories
       }
     }
   ]);

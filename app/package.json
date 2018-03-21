@@ -1,10 +1,10 @@
 {
-  "name": "webconsole-console",
+  "name": "webconsole-navigation",
   "version": "0.0.0",
-  "description": "Navigation and other common services",
+  "private": true,
+  "description": "Navigation services",
   "main": "server.js",
   "scripts": {
-    "dev": "node -r dotenv/config server.js dotenv_config_path=../_env",
     "lint": "belly-button -f",
     "pretest": "yarn run lint",
     "test": "lab -c",
@@ -12,21 +12,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/geek/webconsole-console.git"
+    "url": "git+https://github.com/joyent/webconsole-navigation.git"
   },
   "keywords": [],
   "author": "wyatt",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/geek/webconsole-console/issues"
+    "url": "https://github.com/joyent/webconsole-navigation/issues"
   },
-  "homepage": "https://github.com/geek/webconsole-console#readme",
+  "homepage": "https://github.com/joyent/webconsole-navigation#readme",
   "dependencies": {
     "brule": "3.x.x",
-    "consul": "0.30.x",
-    "graphi": "5.4.x",
     "hapi": "17.x.x",
-    "hoek": "5.0.x",
+    "hapi-webconsole-nav": "0.x.x",
     "instana-nodejs-sensor": "1.36.x"
   },
   "devDependencies": {

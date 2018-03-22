@@ -9,3 +9,7 @@ RUN apk update \
 COPY app /opt/app
 WORKDIR /opt/app/
 RUN yarn
+
+# Setup the prestart script
+COPY ./bin/prestart.sh /bin/prestart.sh
+RUN chmod 700 /bin/prestart.sh

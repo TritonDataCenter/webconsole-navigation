@@ -2,11 +2,13 @@
 
 const Brule = require('brule');
 const Hapi = require('hapi');
-const Navigation = require('hapi-webconsole-nav');
+const Api = require('hapi-webconsole-nav');
+const Ui = require('my-joy-navigation');
 const Sso = require('hapi-triton-auth');
 const Instana = require('./instana');
+
+const Regions = require('./data/regions');
 const Categories = require('./data/categories');
-const Datacenters = require('./data/datacenters');
 
 
 const {
@@ -65,17 +67,20 @@ async function main () {
       }
     },
     {
-      plugin: Navigation,
+      plugin: Api,
       options: {
         keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
         keyPath: SDC_KEY_PATH,
         apiBaseUrl: SDC_URL,
-        datacenters: Datacenters,
+        regions: Regions,
         categories: Categories
       },
       routes: {
         prefix: `/${NAMESPACE}`
       }
+    },
+    {
+      plugin: Ui
     }
   ]);
 

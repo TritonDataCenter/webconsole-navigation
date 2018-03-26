@@ -17,6 +17,7 @@ const {
   COOKIE_DOMAIN,
   COOKIE_SECURE,
   COOKIE_HTTP_ONLY,
+  DC_NAME,
   SDC_KEY_PATH,
   SDC_ACCOUNT,
   SDC_KEY_ID,
@@ -72,6 +73,8 @@ async function main () {
         keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
         keyPath: SDC_KEY_PATH,
         apiBaseUrl: SDC_URL,
+        dcName: DC_NAME,
+        baseUrl: BASE_URL,
         regions: Regions,
         categories: Categories
       },

@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "belly-button": "4.x.x",
-    "dotenv": "5.0.x",
     "code": "5.x.x",
     "lab": "15.x.x",
     "testdouble": "3.6.x"

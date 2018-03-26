@@ -21,7 +21,8 @@ const {
   SDC_URL,
   SSO_URL,
   BASE_URL = `http://0.0.0.0:${PORT}`,
-  NODE_ENV = 'production'
+  NODE_ENV = 'production',
+  NAMESPACE = 'navigation'
 } = process.env;
 
 Instana.register(NODE_ENV);
@@ -71,6 +72,9 @@ async function main () {
         apiBaseUrl: SDC_URL,
         datacenters: Datacenters,
         categories: Categories
+      },
+      routes: {
+        prefix: `/${NAMESPACE}`
       }
     }
   ]);

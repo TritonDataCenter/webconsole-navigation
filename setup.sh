@@ -83,6 +83,7 @@ check() {
 
     echo >> .env
     echo NODE_ENV=production >> .env
+    echo NAMESPACE=navigation >> .env
     echo HEALTH_ENDPOINT=check-it-out >> .env
     echo NODE_START=node server.js >> .env
 }

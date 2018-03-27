@@ -27,7 +27,7 @@
     "hapi-triton-auth": "2.0.1",
     "hapi-webconsole-nav": "1.1.0",
     "instana-nodejs-sensor": "1.37.0",
-    "my-joy-navigation": "2.4.0"
+    "my-joy-navigation": "2.5.0"
   },
   "devDependencies": {
     "belly-button": "4.x.x",

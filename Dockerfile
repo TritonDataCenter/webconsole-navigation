@@ -1,9 +1,4 @@
-FROM joyent/webconsole-node:0.0.1
-
-RUN apk update \
-    && apk add --update curl bash build-base python  \
-    && apk upgrade \
-    && rm -rf /var/cache/apk/*
+FROM joyent/webconsole-node:0.0.2
 
 # Setup the Node.js app
 COPY app /opt/app
@@ -13,3 +8,5 @@ RUN yarn
 # Setup the prestart script
 COPY ./bin/prestart.sh /bin/prestart.sh
 RUN chmod 700 /bin/prestart.sh
+
+CMD ["node", "server.js"]

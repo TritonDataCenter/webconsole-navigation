@@ -16,7 +16,7 @@ describe('Instance Console', () => {
     const barrier = new Barrier();
     const options = {
       env: {
-        // Minimum environment needed for the server to start.
+        // This is a test cookie
         COOKIE_PASSWORD: 'SVAbtKJolw3E3ETVJFZwI42X8khI2oWWUTyS',
         COOKIE_SECURE: 0,
         COOKIE_HTTP_ONLY: 1,

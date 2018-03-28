@@ -58,11 +58,6 @@ check() {
     SDC_ACCOUNT=$(triton env | grep SDC_ACCOUNT | awk -F"=" '{print $2}' | awk -F"\"" '{print $2}')
     SDC_KEY_ID=$(triton env | grep SDC_KEY_ID | awk -F"=" '{print $2}' | awk -F"\"" '{print $2}')
 
-    echo '# Consul discovery via Triton CNS' > .consul.env
-    echo CONSUL=webconsole-navigation-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.${TRITON_DOMAIN} >> .consul.env
-    echo CONSUL_AGENT=1 >> .consul.env
-    echo >> .consul.env
-
     echo '# Site URL' > .env
     echo BASE_URL=https://webconsole-navigation.svc.${TRITON_ACCOUNT}.${TRITON_DC}.${TRITON_DOMAIN} >> .env
     echo COOKIE_DOMAIN=triton.zone >> .env
@@ -76,16 +71,12 @@ check() {
     echo SDC_URL=${SDC_URL} >> .env
     echo SDC_ACCOUNT=${SDC_ACCOUNT} >> .env
     echo SDC_KEY_ID=${SDC_KEY_ID} >> .env
-    echo CONSUL=webconsole-navigation-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.${TRITON_DOMAIN} >> .env
 
     echo SDC_KEY=$(cat "${TRITON_PRIVATE_KEY_PATH}" | tr '\n' '#') >> .env
     echo SDC_KEY_PUB=$(cat "${TRITON_PRIVATE_KEY_PATH}".pub | tr '\n' '#') >> .env
 
     echo >> .env
     echo NODE_ENV=production >> .env
-    echo NAMESPACE=navigation >> .env
-    echo HEALTH_ENDPOINT=check-it-out >> .env
-    echo NODE_START=node server.js >> .env
 }
 
 # ---------------------------------------------------

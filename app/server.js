@@ -89,6 +89,14 @@ async function main () {
 
   server.auth.default('sso');
 
+  server.route({
+    method: 'GET',
+    path: `/${NAMESPACE}/logout`,
+    handler: (request, h) => {
+      return h.response('<script>location.href="/"</script>').unstate('sso');
+    }
+  });
+
   await server.start();
   console.log(`server started at http://localhost:${server.info.port}`);
 }

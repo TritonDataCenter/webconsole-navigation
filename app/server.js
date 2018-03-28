@@ -1,14 +1,25 @@
 'use strict';
 
+const Instana = require('instana-nodejs-sensor');
+
+if (process.env.NODE_ENV === 'production') {
+  Instana({
+    tracing: {
+      enabled: true
+    }
+  });
+}
+
 const Brule = require('brule');
 const Hapi = require('hapi');
 const Api = require('hapi-webconsole-nav');
 const Ui = require('my-joy-navigation');
 const Sso = require('hapi-triton-auth');
-const Instana = require('./instana');
+const Traci = require('traci');
 
-const Regions = require('./data/regions');
-const Categories = require('./data/categories');
+const dataPath = process.env.DATA_PATH || './data';
+const Regions = require(`${dataPath}/regions`);
+const Categories = require(`${dataPath}/categories`);
 
 
 const {
@@ -24,12 +35,8 @@ const {
   SDC_URL,
   SSO_URL,
   BASE_URL = `http://0.0.0.0:${PORT}`,
-  NODE_ENV = 'production',
   NAMESPACE = 'navigation'
 } = process.env;
-
-Instana.register(NODE_ENV);
-
 
 const server = Hapi.server({
   port: PORT
@@ -57,7 +64,7 @@ async function main () {
         keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
         keyPath: SDC_KEY_PATH,
         permissions: { cloudapi: ['/my/*'] },
-        isDev: NODE_ENV === 'development',
+        isDev: process.env.NODE_ENV === 'development',
         cookie: {
           isHttpOnly: COOKIE_HTTP_ONLY !== '0',
           isSecure: COOKIE_SECURE !== '0',
@@ -86,6 +93,15 @@ async function main () {
       plugin: Ui
     }
   ]);
+
+  if (process.env.NODE_ENV === 'production') {
+    await server.register({
+      plugin: Traci,
+      options: {
+        tracer: Instana.opentracing.createTracer()
+      }
+    });
+  }
 
   server.auth.default('sso');
 

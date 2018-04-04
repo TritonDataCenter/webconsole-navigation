@@ -26,7 +26,7 @@
     "hapi": "17.2.3",
     "hapi-triton-auth": "2.0.1",
     "hapi-webconsole-nav": "1.1.1",
-    "instana-nodejs-sensor": "1.37.0",
+    "instana-nodejs-sensor": "1.37.1",
     "my-joy-navigation": "2.6.1",
     "traci": "1.0.4"
   },

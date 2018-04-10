@@ -23,9 +23,10 @@ describe('Instance Console', () => {
         SDC_ACCOUNT: 'test',
         SDC_URL: 'https://us-sw-1.api.joyentcloud.com',
         SDC_KEY_PATH: __filename,  // No need for a real key to test server startup.
-        SSO_URL: 'https://login.samsungcloud.io/login',
+        SSO_URL: 'https://sso.joyent.com/login',
         DATA_PATH: Path.join(__dirname, '/data'),
-        PORT: 0
+        PORT: 0,
+        NODE_ENV: 'development'
       }
     };
     const child = Cp.spawn(process.execPath,

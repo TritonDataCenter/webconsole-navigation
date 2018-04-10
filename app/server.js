@@ -18,8 +18,9 @@ const Sso = require('hapi-triton-auth');
 const Traci = require('traci');
 
 const dataPath = process.env.DATA_PATH || './data';
-const Regions = require(`${dataPath}/regions`);
+const AccountServices = require(`${dataPath}/accounts`);
 const Categories = require(`${dataPath}/categories`);
+const Regions = require(`${dataPath}/regions`);
 
 
 const {
@@ -83,7 +84,8 @@ async function main () {
         dcName: DC_NAME,
         baseUrl: BASE_URL,
         regions: Regions,
-        categories: Categories
+        categories: Categories,
+        accountServices: AccountServices
       },
       routes: {
         prefix: `/${NAMESPACE}`

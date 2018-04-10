@@ -5,6 +5,7 @@
   "description": "Navigation services",
   "main": "server.js",
   "scripts": {
+    "dev": "NODE_ENV=development node -r dotenv/config server.js dotenv_config_path=../.env",
     "lint": "belly-button -f",
     "pretest": "yarn run lint",
     "test": "lab -c",
@@ -24,16 +25,17 @@
   "dependencies": {
     "brule": "3.1.0",
     "hapi": "17.2.3",
-    "hapi-triton-auth": "2.0.1",
-    "hapi-webconsole-nav": "1.1.1",
+    "hapi-triton-auth": "2.1.0",
+    "hapi-webconsole-nav": "2.0.0",
     "instana-nodejs-sensor": "1.37.1",
-    "my-joy-navigation": "2.6.1",
+    "my-joy-navigation": "2.7.0",
     "traci": "1.0.4"
   },
   "devDependencies": {
     "belly-button": "4.x.x",
     "cb-barrier": "1.x.x",
     "code": "5.x.x",
+    "dotenv": "5.x.x",
     "lab": "15.x.x"
   }
 }

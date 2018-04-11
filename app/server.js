@@ -10,11 +10,13 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+const { join } = require('path');
 const Brule = require('brule');
 const Hapi = require('hapi');
-const Api = require('hapi-webconsole-nav');
-const Ui = require('my-joy-navigation');
 const Sso = require('hapi-triton-auth');
+const Api = require('hapi-webconsole-nav');
+const Inert = require('inert');
+const Ui = require('my-joy-navigation');
 const Traci = require('traci');
 
 const dataPath = process.env.DATA_PATH || './data';
@@ -55,6 +57,9 @@ async function main () {
       options: {
         auth: false
       }
+    },
+    {
+      plugin: Inert
     },
     {
       plugin: Sso,
@@ -106,6 +111,19 @@ async function main () {
   }
 
   server.auth.default('sso');
+
+  server.route({
+    method: 'get',
+    path: `/${NAMESPACE}/versions`,
+    config: {
+      auth: false,
+      handler: {
+        file: {
+          path: join(__dirname, 'versions.json')
+        }
+      }
+    }
+  });
 
   server.route({
     method: 'GET',

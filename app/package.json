@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/joyent/webconsole-navigation#readme",
   "dependencies": {
+    "blankie": "4.0.0",
     "brule": "3.1.0",
     "hapi": "17.2.3",
     "hapi-triton-auth": "2.1.0",
@@ -30,6 +31,7 @@
     "inert": "5.1.0",
     "instana-nodejs-sensor": "1.37.1",
     "my-joy-navigation": "2.7.0",
+    "scooter": "5.0.0",
     "traci": "1.0.4"
   },
   "devDependencies": {

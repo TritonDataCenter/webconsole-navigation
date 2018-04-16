@@ -11,12 +11,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const { join } = require('path');
+
+const Blankie = require('blankie');
 const Brule = require('brule');
 const Hapi = require('hapi');
 const Sso = require('hapi-triton-auth');
 const Api = require('hapi-webconsole-nav');
 const Inert = require('inert');
 const Ui = require('my-joy-navigation');
+const Scooter = require('scooter');
 const Traci = require('traci');
 
 const dataPath = process.env.DATA_PATH || './data';
@@ -42,7 +45,16 @@ const {
 } = process.env;
 
 const server = Hapi.server({
-  port: PORT
+  port: PORT,
+  routes: {
+    security: {
+      hsts: true,
+      xframe: 'deny',
+      xss: true,
+      noOpen: true,
+      noSniff: true
+    }
+  }
 });
 
 process.on('unhandledRejection', (err) => {
@@ -60,6 +72,19 @@ async function main () {
     },
     {
       plugin: Inert
+    },
+    {
+      plugin: Scooter
+    },
+    {
+      plugin: Blankie.plugin,
+      options: {
+        defaultSrc: ['self'],
+        imgSrc: '*',
+        scriptSrc: ['self', 'unsafe-inline', 'http://unpkg.com', 'http://cdn.jsdelivr.net'],
+        styleSrc: ['self', 'unsafe-inline', 'http://unpkg.com'],
+        generateNonces: false
+      }
     },
     {
       plugin: Sso,

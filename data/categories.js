@@ -27,7 +27,7 @@ module.exports = [
       {
         name: 'Firewall Rules',
         slug: 'firewall',
-        description: 'Control the bits coming and going'
+        description: 'Control traffic across instances'
       }
     ]
   },
@@ -69,22 +69,22 @@ module.exports = [
       {
         name: 'Service Status',
         slug: 'status',
-        description: 'Find out about the status of our services'
+        description: 'Find out the status of our services'
       },
       {
         name: 'Contact Support',
         slug: 'contact-support',
-        description: 'Chat to us via phone or email'
+        description: 'Contact our experts for help'
       },
       {
         name: 'Support Plans',
         slug: 'support-plans',
-        description: 'Write here about Support Plans'
+        description: 'Learn about premium support plans'
       },
       {
         name: 'Getting Started',
         slug: 'getting-started',
-        description: 'Write here about Getting Started'
+        description: 'Guides for building and managing applications'
       }
     ]
   }

@@ -1,26 +1,16 @@
 'use strict';
 
-const Instana = require('instana-nodejs-sensor');
-
-if (process.env.NODE_ENV === 'production') {
-  Instana({
-    tracing: {
-      enabled: true
-    }
-  });
-}
-
 const { join } = require('path');
 
 const Blankie = require('blankie');
 const Brule = require('brule');
 const Hapi = require('hapi');
+const HapiPino = require('hapi-pino');
 const Sso = require('hapi-triton-auth');
 const Api = require('hapi-webconsole-nav');
 const Inert = require('inert');
 const Ui = require('my-joy-navigation');
 const Scooter = require('scooter');
-const Traci = require('traci');
 
 const dataPath = process.env.DATA_PATH || './data';
 const AccountServices = require(`${dataPath}/accounts`);
@@ -41,7 +31,8 @@ const {
   SDC_URL,
   SSO_URL,
   BASE_URL = `http://0.0.0.0:${PORT}`,
-  NAMESPACE = 'navigation'
+  NAMESPACE = 'navigation',
+  NODE_ENV
 } = process.env;
 
 const server = Hapi.server({
@@ -95,7 +86,7 @@ async function main () {
         keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
         keyPath: SDC_KEY_PATH,
         permissions: { cloudapi: ['/my/*'] },
-        isDev: process.env.NODE_ENV === 'development',
+        isDev: NODE_ENV === 'development',
         cookie: {
           isHttpOnly: COOKIE_HTTP_ONLY !== '0',
           isSecure: COOKIE_SECURE !== '0',
@@ -123,17 +114,14 @@ async function main () {
     },
     {
       plugin: Ui
+    },
+    {
+      plugin: HapiPino,
+      options: {
+        prettyPrint: NODE_ENV !== 'production'
+      }
     }
   ]);
-
-  if (process.env.NODE_ENV === 'production') {
-    await server.register({
-      plugin: Traci,
-      options: {
-        tracer: Instana.opentracing.createTracer()
-      }
-    });
-  }
 
   server.auth.default('sso');
 
@@ -159,7 +147,6 @@ async function main () {
   });
 
   await server.start();
-  console.log(`server started at http://localhost:${server.info.port}`);
 }
 
 main();

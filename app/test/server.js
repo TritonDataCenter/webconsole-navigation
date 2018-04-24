@@ -39,7 +39,7 @@ describe('Instance Console', () => {
 
     child.stdout.on('data', (data) => {
       stdout += data;
-      if (/server started at /.test(stdout)) {
+      if (/server started/.test(stdout)) {
         child.kill();
         expect(child.killed).to.equal(true);
         barrier.pass();

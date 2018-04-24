@@ -26,6 +26,7 @@
     "blankie": "4.0.0",
     "brule": "3.1.0",
     "hapi": "17.2.3",
+    "hapi-pino": "4.0.x",
     "hapi-triton-auth": "2.1.0",
     "hapi-webconsole-nav": "2.0.0",
     "inert": "5.1.0",

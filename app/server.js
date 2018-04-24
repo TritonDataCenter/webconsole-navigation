@@ -15,6 +15,7 @@ const { join } = require('path');
 const Blankie = require('blankie');
 const Brule = require('brule');
 const Hapi = require('hapi');
+const HapiPino = require('hapi-pino');
 const Sso = require('hapi-triton-auth');
 const Api = require('hapi-webconsole-nav');
 const Inert = require('inert');
@@ -41,7 +42,8 @@ const {
   SDC_URL,
   SSO_URL,
   BASE_URL = `http://0.0.0.0:${PORT}`,
-  NAMESPACE = 'navigation'
+  NAMESPACE = 'navigation',
+  NODE_ENV = 'development'
 } = process.env;
 
 const server = Hapi.server({
@@ -59,7 +61,7 @@ const server = Hapi.server({
 
 process.on('unhandledRejection', (err) => {
   server.log(['error'], err);
-  console.error(err);
+  console.log(err);
 });
 
 async function main () {
@@ -123,10 +125,16 @@ async function main () {
     },
     {
       plugin: Ui
+    },
+    {
+      plugin: HapiPino,
+      options: {
+        prettyPrint: NODE_ENV !== 'production'
+      }
     }
   ]);
 
-  if (process.env.NODE_ENV === 'production') {
+  if (NODE_ENV === 'production') {
     await server.register({
       plugin: Traci,
       options: {
@@ -159,7 +167,6 @@ async function main () {
   });
 
   await server.start();
-  console.log(`server started at http://localhost:${server.info.port}`);
 }
 
 main();

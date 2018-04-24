@@ -32,7 +32,7 @@ const {
   SSO_URL,
   BASE_URL = `http://0.0.0.0:${PORT}`,
   NAMESPACE = 'navigation',
-  NODE_ENV
+  NODE_ENV = 'development'
 } = process.env;
 
 const server = Hapi.server({
@@ -50,103 +50,106 @@ const server = Hapi.server({
 
 process.on('unhandledRejection', (err) => {
   server.log(['error'], err);
-  console.error(err);
 });
 
 async function main () {
-  await server.register([
-    {
-      plugin: Brule,
-      options: {
-        auth: false
-      }
-    },
-    {
-      plugin: Inert
-    },
-    {
-      plugin: Scooter
-    },
-    {
-      plugin: Blankie.plugin,
-      options: {
-        defaultSrc: ['self'],
-        imgSrc: '*',
-        scriptSrc: ['self', 'unsafe-inline', 'http://unpkg.com', 'http://cdn.jsdelivr.net'],
-        styleSrc: ['self', 'unsafe-inline', 'http://unpkg.com'],
-        generateNonces: false
-      }
-    },
-    {
-      plugin: Sso,
-      options: {
-        ssoUrl: SSO_URL,
-        baseUrl: BASE_URL,
-        apiBaseUrl: SDC_URL,
-        keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
-        keyPath: SDC_KEY_PATH,
-        permissions: { cloudapi: ['/my/*'] },
-        isDev: NODE_ENV === 'development',
-        cookie: {
-          isHttpOnly: COOKIE_HTTP_ONLY !== '0',
-          isSecure: COOKIE_SECURE !== '0',
-          password: COOKIE_PASSWORD,
-          ttl: 4000 * 60 * 60,       // 4 hours
-          domain: COOKIE_DOMAIN
+  try {
+    await server.register([
+      {
+        plugin: Brule,
+        options: {
+          auth: false
         }
-      }
-    },
-    {
-      plugin: Api,
-      options: {
-        keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
-        keyPath: SDC_KEY_PATH,
-        apiBaseUrl: SDC_URL,
-        dcName: DC_NAME,
-        baseUrl: BASE_URL,
-        regions: Regions,
-        categories: Categories,
-        accountServices: AccountServices
       },
-      routes: {
-        prefix: `/${NAMESPACE}`
-      }
-    },
-    {
-      plugin: Ui
-    },
-    {
-      plugin: HapiPino,
-      options: {
-        prettyPrint: NODE_ENV !== 'production'
-      }
-    }
-  ]);
-
-  server.auth.default('sso');
-
-  server.route({
-    method: 'get',
-    path: `/${NAMESPACE}/versions`,
-    config: {
-      auth: false,
-      handler: {
-        file: {
-          path: join(__dirname, 'versions.json')
+      {
+        plugin: Inert
+      },
+      {
+        plugin: Scooter
+      },
+      {
+        plugin: Blankie.plugin,
+        options: {
+          defaultSrc: ['self'],
+          imgSrc: '*',
+          scriptSrc: ['self', 'unsafe-inline', 'http://unpkg.com', 'http://cdn.jsdelivr.net'],
+          styleSrc: ['self', 'unsafe-inline', 'http://unpkg.com'],
+          generateNonces: false
+        }
+      },
+      {
+        plugin: Sso,
+        options: {
+          ssoUrl: SSO_URL,
+          baseUrl: BASE_URL,
+          apiBaseUrl: SDC_URL,
+          keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
+          keyPath: SDC_KEY_PATH,
+          permissions: { cloudapi: ['/my/*'] },
+          isDev: NODE_ENV === 'development',
+          cookie: {
+            isHttpOnly: COOKIE_HTTP_ONLY !== '0',
+            isSecure: COOKIE_SECURE !== '0',
+            password: COOKIE_PASSWORD,
+            ttl: 4000 * 60 * 60,       // 4 hours
+            domain: COOKIE_DOMAIN
+          }
+        }
+      },
+      {
+        plugin: Api,
+        options: {
+          keyId: '/' + SDC_ACCOUNT + '/keys/' + SDC_KEY_ID,
+          keyPath: SDC_KEY_PATH,
+          apiBaseUrl: SDC_URL,
+          dcName: DC_NAME,
+          baseUrl: BASE_URL,
+          regions: Regions,
+          categories: Categories,
+          accountServices: AccountServices
+        },
+        routes: {
+          prefix: `/${NAMESPACE}`
+        }
+      },
+      {
+        plugin: Ui
+      },
+      {
+        plugin: HapiPino,
+        options: {
+          prettyPrint: NODE_ENV !== 'production'
         }
       }
-    }
-  });
+    ]);
 
-  server.route({
-    method: 'GET',
-    path: `/${NAMESPACE}/logout`,
-    handler: (request, h) => {
-      return h.response('<script>location.href="/"</script>').unstate('sso');
-    }
-  });
+    server.auth.default('sso');
 
-  await server.start();
+    server.route({
+      method: 'get',
+      path: `/${NAMESPACE}/versions`,
+      config: {
+        auth: false,
+        handler: {
+          file: {
+            path: join(__dirname, 'versions.json')
+          }
+        }
+      }
+    });
+
+    server.route({
+      method: 'GET',
+      path: `/${NAMESPACE}/logout`,
+      handler: (request, h) => {
+        return h.response('<script>location.href="/"</script>').unstate('sso');
+      }
+    });
+
+    await server.start();
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 main();

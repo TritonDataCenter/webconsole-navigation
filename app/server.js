@@ -61,7 +61,7 @@ const server = Hapi.server({
 
 process.on('unhandledRejection', (err) => {
   server.log(['error'], err);
-  console.log(err);
+  console.error(err);
 });
 
 async function main () {

@@ -22,7 +22,7 @@ describe('Instance Console', () => {
         COOKIE_HTTP_ONLY: 1,
         SDC_ACCOUNT: 'test',
         SDC_URL: 'https://us-sw-1.api.joyentcloud.com',
-        SDC_KEY_PATH: __filename,  // No need for a real key to test server startup.
+        SDC_KEY_PATH: Path.join(__dirname, 'fixtures', 'id_rsa'),
         SSO_URL: 'https://sso.joyent.com/login',
         DATA_PATH: Path.join(__dirname, '/data'),
         PORT: 0,

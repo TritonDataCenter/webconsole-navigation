@@ -1,11 +1,15 @@
 'use strict';
 
+const Fs = require('fs');
 const { join } = require('path');
 
 const Blankie = require('blankie');
 const Brule = require('brule');
 const Hapi = require('hapi');
+const HapiAuthSignature = require('hapi-auth-signi');
 const HapiPino = require('hapi-pino');
+const HttpSignature = require('http-signature');
+const Metri = require('metri');
 const Sso = require('hapi-triton-auth');
 const Api = require('hapi-webconsole-nav');
 const Inert = require('inert');
@@ -34,6 +38,8 @@ const {
   NAMESPACE = 'navigation',
   NODE_ENV = 'development'
 } = process.env;
+
+const adminPublicKey = Fs.readFileSync(SDC_KEY_PATH + '.pub', 'utf8');
 
 const server = Hapi.server({
   port: PORT,
@@ -116,6 +122,20 @@ async function main () {
         plugin: Ui
       },
       {
+        plugin: HapiAuthSignature,
+        options: {
+          tenants: [
+            {
+              secret: COOKIE_PASSWORD,
+              key: HttpSignature.sshKeyToPEM(adminPublicKey),
+              algorithm: 'sha256',
+              format: 'base64',
+              authData: { credentials: { username: SDC_ACCOUNT } }
+            }
+          ]
+        }
+      },
+      {
         plugin: HapiPino,
         options: {
           prettyPrint: NODE_ENV !== 'production'
@@ -124,6 +144,19 @@ async function main () {
     ]);
 
     server.auth.default('sso');
+    server.auth.strategy('bearer', 'signature', { authorizationType: 'bearer' });
+
+    await server.register([
+      {
+        plugin: Metri,
+        options: {
+          auth: 'bearer'
+        },
+        routes: {
+          prefix: `/${NAMESPACE}`
+        }
+      }
+    ]);
 
     server.route({
       method: 'get',

@@ -5,6 +5,7 @@ const { join } = require('path');
 
 const Blankie = require('blankie');
 const Brule = require('brule');
+const Graphi = require('graphi');
 const Hapi = require('hapi');
 const HapiAuthSignature = require('hapi-auth-signi');
 const HapiPino = require('hapi-pino');
@@ -96,6 +97,14 @@ async function main () {
             ttl: 4000 * 60 * 60,       // 4 hours
             domain: COOKIE_DOMAIN
           }
+        }
+      },
+      {
+        plugin: Graphi,
+        options: {
+          graphqlPath: `/${NAMESPACE}/graphql`,
+          authStrategy: 'sso',
+          graphiqlPath: false
         }
       },
       {
